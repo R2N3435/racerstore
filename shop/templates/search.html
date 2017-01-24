@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block start %}
+<div class="container theme-showcase" role="main">
+<div class="container-fluid">
+ <div class="row">
+{% if game or mouse %}
+    <br><br>
+    <div class="col-sm-12">
+        <h3 style="font-family: 'Times New Roman', Times, serif;font-style: italic; color: blue; font-size: 60px;text-align: center;">Search Results</h3><hr>
+    </div>
+    {% if game %}
+    <div class="col-sm-12 ">
+        <h3 style="font-family: 'Times New Roman', Times, serif;font-style: italic; color: blue; font-size: 40px;text-align: center;">Games</h3><hr>
+    </div>
+        {% for games in game %}
+            <div class="col-lg-3">
+                <div class="thumbnail">
+                    <a href="{% url 'detail' games.id %}"><img src="{{ games.game_logo.url }}" class="img-responsive"></a>
+                    <div class="caption">
+                        <h2 style="font-family: 'Times New Roman', Times, serif;font-style: italic;">{{ games.game_name }}</h2>
+                        <h4 style="font-family: 'Times New Roman', Times, serif;font-style: italic;"><span class="glyphicon glyphicon-usd"></span>{{ games.price }} Only</h4>
+                        <a href="{% url 'detail' games.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                        <a href="{% url 'add_to_cart' games.id %}" class="btn btn-primary btn-sm" role="button">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="col-sm-12">
+        {% include 'paginator.html' with page=game %}
+        </div>
+    {% endif %}
+    {% if mouse %}
+    <div class="col-sm-12">
+        <h3 style="font-family: 'Times New Roman', Times, serif;font-style: italic; color: blue; font-size: 40px;text-align: center;">Mouse</h3><hr>
+    </div>
+        {% for mouses in mouse %}
+            <div class="col-lg-3">
+                <div class="thumbnail">
+                    <a href="{% url 'detail_mouse' mouses.id %}"><img src="{{ mouses.mouse_logo.url }}" class="img-responsive"></a>
+                    <div class="caption">
+                        <h2 style="font-family: 'Times New Roman', Times, serif;font-style: italic;">{{ mouses.mouse_name }}</h2>
+                        <h4 style="font-family: 'Times New Roman', Times, serif;font-style: italic;"><span class="glyphicon glyphicon-usd"></span>{{ mouses.price }} Only</h4>
+                        <a href="{% url 'detail_mouse' mouses.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                        <a href="{% url 'add_to_cart_mouse' mouses.id %}" class="btn btn-primary btn-sm" role="button">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="col-sm-12">
+        {% include 'paginator1.html' with page1=mouse %}
+        </div>
+    {% endif %}
+{% else %}
+    <h1>No Items Found</h1>
+{% endif %}
+</div>
+</div>
+</div>
+{% endblock %}

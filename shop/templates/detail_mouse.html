@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block start %}
+<div class="container theme-showcase" role="main">
+ <div class="row">
+    <div class="col-sm-12">
+        <br><br>
+        <h3 style="font-family: 'Times New Roman', Times, serif;font-style: bold; color: blue; font-size: 70px;text-align: center;">{{ mouse.mouse_name }}</h3><hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <img src="{{ mouse.mouse_logo.url }}" class="img-responsive">
+    </div>
+    <div class="col-sm-6">
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px;">Name = {{ mouse.mouse_name }}</p>
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px;">Developers = {{ mouse.mouse_company }}</p>
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px;">Price = <span class="glyphicon glyphicon-usd" style="font-size: 20px"></span>{{ mouse.price }} Only</p>
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px;">Tags:</p>
+        {% if mouse.laser == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Laser</li>
+        {% endif %}
+        {% if game.custom_weight == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Custom_Weight</li>
+        {% endif %}
+        {% if mouse.custom_dpi == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Custom DPI</li>
+        {% endif %}
+        {% if mouse.extra_keys == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Extra Keys</li>
+        {% endif %}
+        {% if mouse.wireless == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Wireless</li>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 50px">Description</p>
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px;">{{ mouse.mouse_description }}</p>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-6">
+        <h1 style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 50px">If you like this game click on buy to proceed</h1>
+    </div>
+    <div class="col-sm-6">
+        <h1 style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 50px">To go back to the shop click on back</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <a href="{% url 'add_to_cart_mouse' mouse.id %}" class="btn btn-success btn-lg" role="button" style="font-size: 20px; font-style: italic;">Add to Cart</a>
+    </div>
+    <div class="col-sm-6">
+        <a href="{% url 'mouses' %}" class="btn btn-info btn-lg" role="button" style="font-size: 20px; font-style: italic;"">Back</a>
+    </div>
+</div>
+{% if rmouse %}
+<hr>
+<div class="row">
+    <div class="col-sm-12">
+        <h3 style="font-family: 'Times New Roman', Times, serif;font-style: italic; color: blue; font-size: 60px;text-align: center;">Recommended Games</h3><hr>
+    </div>
+        {% for r in rmouse %}
+            <div class="col-sm-3">
+                <div class="thumbnail">
+                    <a href="{% url 'detail' r.recomend_mouse.id %}"><img src="{{ r.recomend_mouse.mouse_logo.url }}" class="img-responsive"></a>
+                    <div class="caption">
+                        <h2 style="font-family: 'Times New Roman', Times, serif;font-style: italic;">{{ r.recomend_mouse.mouse_name }}</h2>
+                        <h4 style="font-family: 'Times New Roman', Times, serif;font-style: italic;"><span class="glyphicon glyphicon-usd"></span>{{r.recomend_mouse.price }} Only</h4>
+                        <a href="{% url 'detail' r.recomend_mouse.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                        <a href="{% url 'add_to_cart_mouse' r.recomend_mouse.id %}" class="btn btn-primary btn-sm" role="button">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="col-sm-12">
+        {% include 'paginator.html' with page=rmouse %}
+        </div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

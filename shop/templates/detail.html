@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block start %}
+<div class="container theme-showcase" role="main">
+ <div class="row">
+    <div class="col-sm-12">
+        <br><br>
+        <h3 style="font-family: 'Times New Roman', Times, serif;font-style: bold; color: blue; font-size: 70px;text-align: center;">{{ game.game_name }}</h3><hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <img src="{{ game.game_logo.url }}" class="img-responsive">
+    </div>
+    <div class="col-sm-6">
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px;">Name = {{ game.game_name }}</p>
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px;">Developers = {{ game.game_developers }}</p>
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px;">Price = <span class="glyphicon glyphicon-usd" style="font-size: 20px"></span>{{ game.price }} Only</p>
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px;">Tags:</p>
+        {% if game.simulator == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Simulator</li>
+        {% endif %}
+        {% if game.car == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Car</li>
+        {% endif %}
+        {% if game.arcade == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Arcade</li>
+        {% endif %}
+        {% if game.bike == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Bike</li>
+        {% endif %}
+        {% if game.truck == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Truck</li>
+        {% endif %}
+        {% if game.dirt == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Dirt</li>
+        {% endif %}
+        {% if game.road == True %}
+            <li style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px;">Road</li>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 50px">Description</p>
+        <p style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px;">{{ game.game_description }}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <h1 style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 50px">Gameplay images</h1>
+        <img src="{{ game.game_image1.url }}" class="img-responsive">
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <img src="{{ game.game_image2.url }}" class="img-responsive">
+    </div>
+    <div class="col-sm-6">
+        <img src="{{ game.game_image3.url }}" class="img-responsive">
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-6">
+        <h1 style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 50px">If you like this game click on buy to proceed</h1>
+    </div>
+    <div class="col-sm-6">
+        <h1 style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 50px">To go back to the shop click on back</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <a href="{% url 'add_to_cart' game.id %}" class="btn btn-success btn-lg" role="button" style="font-size: 20px; font-style: italic;">Add to Cart</a>
+    </div>
+    <div class="col-sm-6">
+        <a href="{% url 'shop' %}" class="btn btn-info btn-lg" role="button" style="font-size: 20px; font-style: italic;"">Back</a>
+    </div>
+</div>
+{% if rgame %}
+<hr>
+<div class="row">
+    <div class="col-sm-12">
+        <h3 style="font-family: 'Times New Roman', Times, serif;font-style: italic; color: blue; font-size: 60px;text-align: center;">Recommended Games</h3><hr>
+    </div>
+        {% for r in rgame %}
+            <div class="col-sm-3">
+                <div class="thumbnail">
+                    <a href="{% url 'detail' r.recomend_game.id %}"><img src="{{ r.recomend_game.game_logo.url }}" class="img-responsive"></a>
+                    <div class="caption">
+                        <h2 style="font-family: 'Times New Roman', Times, serif;font-style: italic;">{{ r.recomend_game.game_name }}</h2>
+                        <h4 style="font-family: 'Times New Roman', Times, serif;font-style: italic;"><span class="glyphicon glyphicon-usd"></span>{{ r.recomend_game.price }} Only</h4>
+                        <a href="{% url 'detail' r.recomend_game.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                        <a href="{% url 'add_to_cart' r.recomend_game.id %}" class="btn btn-primary btn-sm" role="button">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="col-sm-12">
+        {% include 'paginator.html' with page=rgame %}
+        </div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class = 'row'>
+<div class = 'col-sm-6 col-sm-offset-3'>
+<br><br>
+<h1 style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 47px;">Please fill the following details</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ user_form|crispy }}
+  {{ profile_form|crispy }}
+  <button type="submit" class="btn btn-success">Proceed</button>
+</form>
+</div>
+</div>
+{% endblock %}

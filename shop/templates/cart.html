@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block start %}
+<div class="col-md-8 col-md-offset-2 col-sm-12 maincontent">
+    <br><br>
+    <div style="text-align: center; text-decoration: underline;"><h3  style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 50px; color: blue;">Your Cart</h3></div>
+        <div class="cart-container">
+        {% if not cart_game and not cart_mouse %}
+            <div>
+                There are no items in your cart.
+            </div>
+        {% endif %}
+        {% for item in cart_game %}
+            <div class="cart_item">
+                <div class="cart-listing">
+                    <span class="title" style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px">{{ item.game.game_name }}</span> by {{ item.game.game_developers }}
+                </div>
+                <div class="cart-price">
+                    <span class="cart-quantity" style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 20px">{{ item.quantity }} x <span class="cart-value" style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 20px"><span class="glyphicon glyphicon-usd" style="font-size: 16px"></span>{{ item.game.price }} </span></span>
+                    <h1 style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 20px">Quantity: <a href="{% url 'add_to_cart' item.game.id %}">[+]</a>/<a href="{% url 'remove_from_cart' item.game.id %}">[-]</a></h1>
+                </div>
+            </div>
+        {% endfor %}
+        {% for item in cart_mouse %}
+            <div class="cart_item">
+                <div class="cart-listing">
+                    <span class="title" style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 25px">{{ item.mouse.mouse_name }}</span> by {{ item.mouse.mouse_company }}
+                </div>
+                <div class="cart-price">
+                    <span class="cart-quantity" style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 20px">{{ item.quantity }} x <span class="cart-value" style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 20px"><span class="glyphicon glyphicon-usd" style="font-size: 16px"></span>{{ item.mouse.price }} Units</span></span>
+                    <h1 style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 20px">Quantity: <a href="{% url 'add_to_cart_mouse' item.mouse.id %}">[+]</a>/<a href="{% url 'remove_from_cart_mouse' item.mouse.id %}">[-]</a></h1>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="cart-total">
+            <h4  style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 30px">Total: <span class="cart-value"><span class="glyphicon glyphicon-usd" style="font-size: 20px"></span>{{total}}.</span>  Count: <span class="cart-value">{{count}} Items.</span></h4>
+        </div>
+    </div>
+    <a href="{% url 'buy' %}" class="btn btn-success btn-lg" role="button" style="font-size: 20px; font-style: italic;"">Buy Now</a>
+    <a href="{% url 'clear' %}" class="btn btn-danger btn-lg" role="button" style="font-size: 20px; font-style: italic;"">Clear all</a>
+</div>
+{% endblock %}

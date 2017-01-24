@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block start %}
+<br><br><br>
+<div class = 'row'>
+<div class = 'col-sm-6 col-sm-offset-3'>
+{% if form %}
+<h1 style="font-family: 'Times New Roman', Times, serif;font-style: italic; font-size: 47px;">Thank you for your feedback</h1>
+<form method ='POST' action="">{% csrf_token %}
+{{ form|crispy}}
+<input type="submit" value="submit form" class="btn btn-success" />
+</form>
+{% endif %}
+{% if confirm_message %}
+<div style="text-align: center; font-family: 'Times New Roman', Times, serif;">
+<h1 style="font-size: 50px">{{title}}</h1>
+<p style="font-size: 35px">{{confirm_message}}</p>
+{% endif %}
+</div>
+</div>
+{% endblock %}
